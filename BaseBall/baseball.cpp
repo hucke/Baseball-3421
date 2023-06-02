@@ -29,11 +29,12 @@ public:
     {
         for (auto ch : guessNumber)
         {
-            if (ch >= '0' && ch <= '9')
+            if (ch < '0' || ch > '9')
             {
                 return true;
             }
         }
+        return false;
     }
 
     void assertIllegalArguments(std::string guessNumber)
@@ -64,7 +65,34 @@ public:
             return { true, 3, 0 };
         }
 
-        return { false, 0, 0 };
+        bool solved = (guessNumber == question_);
+        int strikes = getStrikeCount(guessNumber);
+        int balls = getStrikeCount(guessNumber);
+        return { solved, strikes, balls };
+    }
+
+    int getStrikeCount(string guessNumber)
+    {
+        int result = 0;
+        for (int i = 0; i < 3; ++i)
+        {
+            size_t index = question_.find(guessNumber[i]);
+            if (index == -1 || index != i) continue;
+            result++;
+        }
+        return result;
+    }
+
+    int getBallCount(string guessNumber)
+    {
+        int result = 0;
+        for (int i = 0; i < 3; ++i)
+        {
+            size_t index = question_.find(guessNumber[i]);
+            if (index == -1 || index == i) continue;
+            result++;
+        }
+        return result;
     }
 
 private:

@@ -17,3 +17,11 @@ TEST(BaseballGame, PerfectMatch) {
     EXPECT_EQ(3, result.strike);
     EXPECT_EQ(0, result.balls);
 }
+
+TEST(BaseballGame, MissMatch) {
+    Baseball baseball("123");
+    Result result = baseball.guess("789");
+    EXPECT_EQ(false, result.solved);
+    EXPECT_EQ(0, result.strike);
+    EXPECT_EQ(0, result.balls);
+}
